@@ -28,7 +28,7 @@
     "DOM"
   ],
   "dependencies": {
-    "brisky-core": "vigour-io/brisky-core"
+    "brisky-core": "0.0.1"
   },
   "contributors": [
     "Jim de Beer <jim@vigour.io>",
