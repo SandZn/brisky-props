@@ -5,6 +5,7 @@ const props = require('brisky-core/lib/render/static').property
 exports.properties = {
   props: {
     type: 'property',
+    properties: { type: null },
     render: {
       static: props,
       state (target, state, type, stamp, subs, tree, id, pid) {
