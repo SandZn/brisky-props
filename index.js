@@ -10,7 +10,7 @@ exports.properties = {
       static: props,
       state (target, state, type, stamp, subs, tree, id, pid) {
         const pnode = getParent(type, stamp, subs, tree, pid)
-        if (!pnode._propsStaticParsed) {
+        if (pnode && !pnode._propsStaticParsed) {
           props(target, pnode)
           pnode._propsStaticParsed = true
         }
