@@ -43,19 +43,6 @@ exports.properties = {
         }
       }
     },
-    properties: {
-      type: null,
-      value: {
-        render: {
-          static (target, pnode) {
-            pnode.value = target.compute()
-          },
-          state (target, state, type, stamp, subs, tree, id, pid) {
-            const pnode = getParent(type, stamp, subs, tree, pid)
-            pnode.value = target.compute(state)
-          }
-        }
-      }
-    }
+    properties: { type: null }
   }
 }
