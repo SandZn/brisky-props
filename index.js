@@ -43,6 +43,25 @@ exports.properties = {
         }
       }
     },
-    properties: { type: null }
+    properties: {
+      type: null,
+      value: {
+        render: {
+          static (target, pnode) {
+            const val = target.compute()
+            pnode.value = val
+          },
+          state (target, state, type, stamp, subs, tree, id, pid) {
+            const pnode = getParent(type, stamp, subs, tree, pid)
+            if (type === 'remove') {
+              if (pnode) { pnode.value = '' }
+            } else {
+              const val = target.compute(state)
+              pnode.value = val === target ? '' : val
+            }
+          }
+        }
+      }
+    }
   }
 }
