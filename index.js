@@ -15,7 +15,7 @@ exports.properties = {
         }
       }
     },
-    Child: {
+    child: {
       properties: { name: true },
       render: {
         static (target, pnode) {
