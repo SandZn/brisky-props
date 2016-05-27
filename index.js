@@ -58,7 +58,6 @@ exports.properties = {
             } else {
               const val = target.compute(state)
               if (val !== pnode.value) {
-                console.log('wawa', val, pnode.value)
                 pnode.value = val === target ? '' : val
               }
             }
