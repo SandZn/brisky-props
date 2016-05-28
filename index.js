@@ -1,10 +1,10 @@
 'use strict'
 const getParent = require('brisky-core/lib/render/dom/parent')
 const props = require('brisky-core/lib/render/static').property
+const Property = require('brisky-core/lib/property').Constructor
 
 exports.properties = {
-  props: {
-    type: 'property',
+  props: new Property({
     render: {
       static: props,
       state (target, state, type, stamp, subs, tree, id, pid) {
@@ -65,5 +65,5 @@ exports.properties = {
         }
       }
     }
-  }
+  })
 }

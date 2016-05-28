@@ -7,8 +7,6 @@ const render = require('brisky-core/render')
 // note: html-element handles attributes a bit weird (https://github.com/1N50MN14/html-element/issues/23)
 test('static attributes', function (t) {
   var elem, attr1, attr2
-  t.plan(2)
-
   elem = render({
     props: {
       someattribute: true
@@ -33,6 +31,10 @@ test('static attributes', function (t) {
     (attr1 === 'false' || attr1.value === '') &&
     (attr2 === 'true' || attr2.value === true)
     , 'multiple attributes')
+
+  t.ok(!elem.getAttribute('type'), 'doesn\'t include type')
+
+  t.end()
 })
 
 test('state driven attributes', function (t) {
