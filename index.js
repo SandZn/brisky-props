@@ -34,7 +34,7 @@ exports.properties = {
             }
           } else {
             const val = target.compute(state)
-            if (val === state) {
+            if (val === state || val === target) {
               pnode.removeAttribute(target.name || target.key)
             } else {
               pnode.setAttribute(target.name || target.key, val)
