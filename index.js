@@ -28,16 +28,21 @@ exports.properties = {
         },
         state (target, state, type, stamp, subs, tree, id, pid) {
           const pnode = getParent(type, stamp, subs, tree, pid)
+          const key = target.name || target.key
           if (type === 'remove') {
             if (pnode) {
-              pnode.removeAttribute(target.name || target.key)
+              pnode.removeAttribute(key)
             }
           } else {
             const val = target.compute(state)
             if (val === state || val === target) {
-              pnode.removeAttribute(target.name || target.key)
+              if (key in pnode) {
+                pnode.removeAttribute(key)
+              }
             } else {
-              pnode.setAttribute(target.name || target.key, val)
+              if (!(key in pnode) && pnode[key] !== val) {
+                pnode.setAttribute(key, val)
+              }
             }
           }
         }
@@ -57,6 +62,7 @@ exports.properties = {
               if (pnode) { pnode.value = '' }
             } else {
               const val = target.compute(state)
+              pnode.value
               if (val !== pnode.value) {
                 pnode.value = val === target ? '' : val
               }
