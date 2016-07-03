@@ -40,7 +40,7 @@ exports.properties = {
                 pnode.removeAttribute(key)
               }
             } else {
-              if (!(key in pnode) && pnode[key] !== val) {
+              if (!(key in pnode) || pnode[key] !== val) {
                 pnode.setAttribute(key, val)
               }
             }
