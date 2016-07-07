@@ -7,3 +7,26 @@
 [![Coverage Status](https://coveralls.io/repos/github/vigour-io/brisky-props/badge.svg?branch=master)](https://coveralls.io/github/vigour-io/brisky-props?branch=master)
 
 <!-- VDOC END -->
+Set attributes on brisky-elements
+
+```javascript
+  const render = require('brisky/render')
+  const s = require('vigour-state/s')
+  const state = s({ thumb: 'cat' })
+
+  const app = render({
+    img: {
+      tag: 'img',
+      props: {
+        src: {
+          $: 'thumb',
+          $tansform: (val) => `http://bla.com/${val}.jpg`
+        }
+      }
+    }
+  }, state)
+
+  document.body.appendChild(app)
+
+  state.cat.thumb('dog') // → changes thumb to dog
+```

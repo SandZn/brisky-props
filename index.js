@@ -21,7 +21,7 @@ exports.properties = {
         static (target, pnode) {
           const val = target.compute()
           if (val === target) {
-            pnode.removeAttribute(target.name || target.key)
+            pnode.removeAttribute(target.name || target.key) // cover is this even nessecary here?
           } else {
             pnode.setAttribute(target.name || target.key, val)
           }
@@ -36,11 +36,11 @@ exports.properties = {
           } else {
             const val = target.compute(state)
             if (val === state || val === target) {
-              if (key in pnode) {
-                pnode.removeAttribute(key)
+              if (pnode.getAttribute(key)) {
+                pnode.removeAttribute(key) // missing
               }
             } else {
-              if (!(key in pnode) || pnode[key] !== val) {
+              if (pnode.getAttribute(key) !== val) {
                 pnode.setAttribute(key, val)
               }
             }
@@ -53,16 +53,16 @@ exports.properties = {
       value: {
         render: {
           static (target, pnode) {
-            const val = target.compute()
-            pnode.value = val
+            const val = target.compute() // missing
+            pnode.value = val // missing
           },
           state (target, state, type, stamp, subs, tree, id, pid) {
             const pnode = getParent(type, stamp, subs, tree, pid)
             if (type === 'remove') {
-              if (pnode) { pnode.value = '' }
+              if (pnode) { pnode.value = '' } // missing
             } else {
               const val = target.compute(state)
-              pnode.value
+              // is value handeled correctly by html-element ?
               if (val !== pnode.value) {
                 pnode.value = val === target ? '' : val
               }
