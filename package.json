@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "watchify-server test/index.js",
-    "test": "node test | tap-difflet && standard",
+    "test": "(ducktape; node test) | tap-difflet && standard",
     "watch": "nodemon test | tap-difflet",
     "cover": "istanbul cover --report none --print detail test/index.js",
     "docs": "node_modules/vigour-doc/bin/vdoc",
@@ -49,6 +49,7 @@
     "Youri Daamen <youri@vigour.io>"
   ],
   "devDependencies": {
+    "ducktape": "^1.0.0",
     "vigour-state": "^4.0.0",
     "coveralls": "^2.11.9",
     "istanbul": "^0.4.3",
