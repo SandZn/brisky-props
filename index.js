@@ -34,13 +34,14 @@ exports.properties = {
               pnode.removeAttribute(key)
             }
           } else {
-            const val = target.compute(state)
+            let val = target.compute(state)
+            if (typeof val === 'boolean') { val = val + '' }
             if (val === state || val === target) {
               if (pnode.getAttribute(key)) {
                 pnode.removeAttribute(key) // missing
               }
             } else {
-              if (pnode.getAttribute(key) !== val) {
+              if (pnode.getAttribute(key) != val) { // eslint-disable-line
                 pnode.setAttribute(key, val)
               }
             }
