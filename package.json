@@ -49,6 +49,7 @@
     "Youri Daamen <youri@vigour.io>"
   ],
   "devDependencies": {
+    "vigour-util": "^3.0.0",
     "ducktape": "^1.0.0",
     "vigour-state": "^4.0.0",
     "coveralls": "^2.11.9",

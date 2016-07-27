@@ -21,7 +21,7 @@ test('state', function (t) {
   if (!attr1) {
     t.fail('no attribute')
   } else {
-    t.ok(attr1 === 'foo' || attr1.value === 'foo', 'simple attribute')
+    t.ok(attr1 === 'foo', 'simple attribute')
   }
   elem = render({
     props: {
@@ -41,31 +41,24 @@ test('state', function (t) {
   if (!attr1 || !attr2) {
     t.fail('no attributes')
   } else {
-    t.ok(
-      (attr1 === 'foo' || attr1.value === 'foo') &&
-      (attr2 === 'bar' || attr2.value === 'bar')
-      , 'multiple attributes')
+    t.ok(attr1 === 'foo' && attr2 === 'bar', 'multiple attributes')
   }
 
   elem = render({
     props: {
-      someattribute: {
-        $: 'someValue'
-      },
+      someattribute: { $: 'someValue' },
       anotherattribute: 'bar'
     }
-  }, {
-    someValue: 'foo'
-  })
+  }, { someValue: 'foo' })
   attr1 = elem.getAttribute('someattribute')
   attr2 = elem.getAttribute('anotherattribute')
   if (!attr1 || !attr2) {
     t.fail('no attributes')
   } else {
     t.ok(
-      (attr1 === 'foo' || attr1.value === 'foo') &&
-      (attr2 === 'bar' || attr2.value === 'bar')
-      , 'mixed state and static attributes')
+      attr1 === 'foo' && attr2 === 'bar',
+      'mixed state and static attributes'
+    )
   }
 })
 
@@ -77,14 +70,12 @@ test('state - src', function (t) {
     img: {
       tag: 'img',
       props: {
-        src: {
-          $: 'thumb'
-        }
+        src: { $: 'thumb' }
       }
     }
   }, state)
   var src = app.childNodes[0].getAttribute('src')
-  t.equal(src.value || src, 'cat.jpg', 'initial')
+  t.equal(src, 'cat.jpg', 'initial')
   state.thumb.remove()
   src = app.childNodes[0].getAttribute('src')
   t.equal(src, void 0, 'remove thumb')
@@ -114,5 +105,49 @@ test('state - value', function (t) {
   t.same(app.childNodes[0].value, '10', 'has correct initial value')
   state.rating.remove()
   t.equal(app.childNodes[0].value, '', 'remove rating') // need to verify in the browser
+  t.end()
+})
+
+test('state - gaurd against too many updates', function (t) {
+  var cntRender = 0
+  var cnt = 0
+  const state = s()
+  const app = render({
+    props: {
+      selected: {
+        define: {
+          extend: {
+            render: {
+              state (render, target, state, type, stamp, subs, tree, id, pid) {
+                cntRender++
+                return render.call(this, target, state, type, stamp, subs, tree, id, pid)
+              }
+            }
+          }
+        },
+        $: 'select'
+      }
+    }
+  }, state)
+
+  const sa = app.setAttribute
+  app.setAttribute = function () {
+    cnt++
+    return sa.apply(this, arguments)
+  }
+  state.set({ select: false })
+  state.select.emit('data')
+
+  t.same(cntRender, 2, 'boolean - fires render twice')
+  t.same(cnt, 1, 'boolean - fires attribute once')
+
+  cntRender = 0
+  cnt = 0
+  state.set({ select: 1 })
+  state.select.emit('data')
+
+  t.same(cntRender, 2, 'number - fires render twice')
+  t.same(cnt, 1, 'number - fires attribute once')
+
   t.end()
 })
