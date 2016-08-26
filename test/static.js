@@ -13,7 +13,7 @@ test('static', function (t) {
     }
   })
   attr1 = elem.getAttribute('someattribute')
-  t.ok(attr1 === 'true' || attr1.value === 'true', 'simple attribute')
+  t.ok(attr1 === 'true', 'simple attribute')
   elem = render({
     props: {
       someattribute: false,
@@ -23,8 +23,8 @@ test('static', function (t) {
   attr1 = elem.getAttribute('someattribute')
   attr2 = elem.getAttribute('anotherattribute')
   t.ok(
-    (attr1 === 'false' || attr1.value === 'false') &&
-    (attr2 === 'true' || attr2.value === 'true')
+    attr1 === 'false' &&
+    attr2 === 'true'
     , 'multiple attributes')
   t.ok(!elem.getAttribute('type'), 'doesn\'t include type')
   t.end()

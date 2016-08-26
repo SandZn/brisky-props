@@ -78,7 +78,7 @@ test('state - src', function (t) {
   t.equal(src, 'cat.jpg', 'initial')
   state.thumb.remove()
   src = app.childNodes[0].getAttribute('src')
-  t.equal(src, void 0, 'remove thumb')
+  t.equal(src, null, 'remove thumb')
   state.set({ thumb: 'x' })
   t.equal(p(app), '<div><img src="x"></img></div>', 'type slider (type override)')
   state.set({ thumb: void 0 })
