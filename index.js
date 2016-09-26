@@ -3,8 +3,6 @@ const getParent = require('brisky-core/lib/render/dom/parent')
 const props = require('brisky-core/lib/render/static').property
 const Property = require('brisky-core/lib/property').Constructor
 
-console.info('xxx')
-
 exports.properties = {
   props: new Property({
     render: {
