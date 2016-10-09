@@ -20,7 +20,7 @@ Set attributes on brisky-elements
       props: {
         src: {
           $: 'thumb',
-          $tansform: (val) => `http://bla.com/${val}.jpg`
+          $transform: (val) => `http://bla.com/${val}.jpg`
         }
       }
     }
